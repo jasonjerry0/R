@@ -1,0 +1,25 @@
+door.diff<-function(x,y){
+   #x is the test number for random test,y is the test number for door test
+   #Part.1
+   o<-c(1,1,1)
+   o[sample(c(1:3),1)]<-2
+   f1<-mean(replicate(x,return(o[sample(c(1:3),1)]>1)))
+   #Part.2
+   o<-c(1,1,1)
+   o[sample(c(1:3),1)]<-3
+   o<-o[-min(o)]
+   f2<-mean(replicate(y,return(o[sample(c(1:2),1)]>2)))
+   f<-f2-f1
+   cat("---\n")
+   print(paste("f1=",f1*100,"%",sep=""))
+   print(paste("f2=",f2*100,"%",sep=""))
+   print(paste("door difference=",f*100,"%",sep=""))
+   cat("Amazing!!! \n","isn't it?","\nHard to BELIEVE???\n")
+   }
+
+
+st<-function(x,y){
+   S<-system.time(door.diff(x,y))
+   cat("What time do you got?\n")
+   return(S)
+}
