@@ -1,0 +1,41 @@
+ar<-function(x,s,e){
+   t<-c(s:e)
+   R<-c()
+   for(r in t){
+   n<<-sample(c(1:100),r)
+percentage.test<-function(){
+   ds<-runif(100)
+   data.date<-ds[n]
+   data.backup<-ds[-data.date]
+   v<-c()
+   for(i in 1:length(data.backup)){
+   if(data.backup[i]>max(data.date)){v[i]<-i
+   }else{v[i]<-0}
+   }
+   v[v>0]->v
+   v<-c(v,1)
+   if(data.backup[v[1]]==max(ds)){return(TRUE)
+   }else{return(FALSE)}
+}
+   re<-mean(replicate(10^x,percentage.test()))
+   cat("\n--------------------------------------------------------------------\n")
+   cat("The multiple is 10^","\b",x,"\n","n is",r,"\b.","\nThe hit percentage is",re,"\b%\n")
+   R<-c(R,re)
+}
+   cat("\n--------------------------------------------------------------------\n")
+   m<-matrix(c((s:e),R),ncol=2)
+   colnames(m)<-c("n","Percentage")
+   rownames(m)<-paste("Row",1:length(t),sep="")
+   m<-as.data.frame(m)
+   print(m)
+   dotchart(m$Percentage, labels=paste("n=",t,"; Per=",round(m$Percentage,digits=4),sep=""),
+           xlab=paste("The difference is",(max(R)-min(R))*100,"%"), 
+           pch=22,cex.lab=.75,bg="darkgreen",cex=1,
+           main="SERIAL TEST FOR DATING STRATEGY",
+           col.main="cornflowerblue",
+           col.sub="green",
+           sub="To test the number of guys a female should choose to evaluate her chances.",
+           col=rainbow(length(t)))
+   diff<-(max(R)-min(R))/(length(t)/2)
+   abline(v=c(seq(min(R),max(R),diff)),lty=2,lwd=.75,col="grey")
+}
