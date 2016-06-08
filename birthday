@@ -1,0 +1,45 @@
+birthday<-function(x, y, z){
+   options(digits=9)
+   #This function defines the possibility of indentical birthday date in a class.
+   k<-c()
+   out<-c()
+   package.fun<-function(){
+   sam<-sample(c(1:365),i,replace=TRUE)
+   if(length(sam)==length(unique(sam))){return(FALSE)
+   }else{return(TRUE)}
+}
+   for(i in (x-z):(x+z)){
+   out[i]<-mean(replicate(10^y,package.fun()))
+   k<-c(k,out[i])
+}
+   cat("\n-------------------------------------------------------------\n")
+   cat("The simulation cycle ran",10^y,"times","\b.\n")
+   cat("The simulation result for the class volume of",x,"is",out[x]*100,"%.","\n")
+   cat("Just for references---")
+   cat("For class volume of",(x-z),"The possibility is",out[x-z]*100,"%","\n")
+   cat("\tFor class volume of",(x+z),"The possibility is",out[x+z]*100,"%","\n")
+   data<-data.frame(c((x-z):(x+z)),k)
+   colnames(data)<-c("Volume","Stats")
+   rownames(data)<-paste("Row",1:length(k),sep="")
+   print(data)
+   library(ggplot2)
+   mytheme <- theme(plot.title=element_text(face="bold.italic",
+size="14", color="darkblue"),
+axis.title=element_text(face="bold.italic",
+size=10, color="red"),
+axis.text=element_text(face="bold", size=9,
+color="darkblue"),
+panel.background=element_rect(fill="white",
+color="lightblue"),
+panel.grid.major.y=element_line(color="grey",
+linetype=1),
+panel.grid.minor.x=element_blank(),
+panel.grid.minor.y=element_line(color="black",
+linetype=2),
+legend.position=c(.1,.85))
+   ggplot(data=data,aes(x=Volume,y=Stats,size=Stats))+
+   geom_point(shape=21,col="darkgreen",fill="cornflowerblue")+
+   labs(x="Volume",y="Possibilities",title="Bubble Chart with Birthday function")+
+   mytheme+
+   geom_smooth(se=FALSE,col="darkgreen",lty=4)
+}
